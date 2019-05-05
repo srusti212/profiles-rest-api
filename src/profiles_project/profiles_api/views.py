@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import serializers
+from rest_framework import viewsets # Is the base module for all the different viewsets that the DRF uses
 
 # Create your views here.
 
@@ -59,3 +60,17 @@ class HelloApiView(APIView):
     def delete(self, request, pk=None):
         """ Deletes an object. """
         return Response({'method': 'delete'})
+
+# ViewSets dont use the traditional http methods for their function names. They use different action names for their functions
+
+class HelloViewSet(viewsets.ViewSet):
+    """ Test API ViewSet. """
+
+    def list(self, request):
+        """ Return a hello message. """
+        a_viewset = [
+        'Uses actions (list, create, retrieve, update, partial_update)',
+        'Automatically maps to URLs using Routers',
+        'Provides more functionality with less code.'
+        ]
+        return Response({'message':'Hello !', 'a_viewset': a_viewset})
