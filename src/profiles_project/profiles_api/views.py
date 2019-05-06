@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from . import serializers
 from rest_framework import viewsets # Is the base module for all the different viewsets that the DRF uses
-
+from . import models
 # Create your views here.
 
 # APIViews work by defining functions that match the standard Http Methods
@@ -102,3 +102,8 @@ class HelloViewSet(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         """ Removes an object by its ID. """
         return Response({'http_method': 'DELETE'})
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """ Handles creating, reading and updating profiles:"""
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
