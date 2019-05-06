@@ -10,6 +10,8 @@ from rest_framework import viewsets # Is the base module for all the different v
 from . import models
 from . import permissions
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
+
 # Create your views here.
 
 # APIViews work by defining functions that match the standard Http Methods
@@ -111,3 +113,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,) # Is a tuple so that you can add SessionAuthentication class as well
     permission_classes = (permissions.UpdateOwnProfile,) # Can further add many permission classes too
+    """ DjangoFilterBackend is mainly equality-based filtering """
+    filter_backends = (filters.SearchFilter,) # is a tuple
+    """ In DRF, for non exact filtering, there is the SearchFilter which makes case-insensitive partial matches searches by default. """
+    search_fields = ['name', 'email']
