@@ -8,6 +8,8 @@ from rest_framework import status
 from . import serializers
 from rest_framework import viewsets # Is the base module for all the different viewsets that the DRF uses
 from . import models
+from . import permissions
+from rest_framework.authentication import TokenAuthentication
 # Create your views here.
 
 # APIViews work by defining functions that match the standard Http Methods
@@ -107,3 +109,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     """ Handles creating, reading and updating profiles:"""
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
+    authentication_classes = (TokenAuthentication,) # Is a tuple so that you can add SessionAuthentication class as well
+    permission_classes = (permissions.UpdateOwnProfile,) # Can further add many permission classes too
